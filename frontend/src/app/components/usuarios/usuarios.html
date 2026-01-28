@@ -1,0 +1,23 @@
+<h2>REPORTE DE USUARIOS</h2>
+
+<table class="table table-striped" *ngIf="users.length > 0">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Nombre</th>
+      <th>Login</th>
+      <th>Correo</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let u of users">
+      <td>{{ u.id }}</td>
+      <td>{{ u.name }}</td>
+      <td>{{ u.username }}</td>
+      <td>{{ u.email }}</td>
+    </tr>
+  </tbody>
+</table>
+ 
+<p *ngIf="users.length === 0">Cargando usuarios...</p>

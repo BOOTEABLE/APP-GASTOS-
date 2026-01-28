@@ -1,0 +1,19 @@
+<table class="table table-striped" *ngIf="gastos.length > 0">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Tipo</th>
+      <th>RUC</th>
+      <th>Valor</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let gasto of gastos">
+      <td>{{ gasto.id }}</td>
+      <td>{{ gasto.tipo }}</td>
+      <td>{{ gasto.ruc }}</td>
+      <td>{{ gasto.valor }}</td>
+    </tr>
+  </tbody>
+</table>
+

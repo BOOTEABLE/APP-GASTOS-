@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "tipo": "Alimentación",
+    "ruc": "1234567890",
+    "valor": 50
+  },
+  {
+    "id": 2,
+    "tipo": "Transporte",
+    "ruc": "1710962018001",
+    "valor": 30
+  }
+]

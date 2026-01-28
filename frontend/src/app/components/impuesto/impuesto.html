@@ -1,0 +1,62 @@
+<h2>Impuesto a la Renta (2023)</h2>
+
+<form (ngSubmit)="calcularImpuestoRenta()">
+
+  <div>
+    <label>Cédula:</label>
+    <input type="text" [(ngModel)]="cedula" name="cedula" required />
+  </div>
+
+  <div>
+    <label>Sueldo anual (Ingresos):</label>
+    <input type="number" [(ngModel)]="sueldoAnual" name="sueldoAnual" min="0" step="0.01" required />
+  </div>
+
+  <h3>Deducciones por Gastos Personales</h3>
+  <small>
+    Límite por categoría: ${{ LIMITE_CATEGORIA }} | Límite total: ${{ LIMITE_TOTAL }}
+  </small>
+
+  <div>
+    <label>Alimentación:</label>
+    <input type="number" [(ngModel)]="alimentacion" name="alimentacion" min="0" step="0.01" />
+  </div>
+
+  <div>
+    <label>Vivienda:</label>
+    <input type="number" [(ngModel)]="vivienda" name="vivienda" min="0" step="0.01" />
+  </div>
+
+  <div>
+    <label>Educación, arte y cultura:</label>
+    <input type="number" [(ngModel)]="educacion" name="educacion" min="0" step="0.01" />
+  </div>
+
+  <div>
+    <label>Vestimenta:</label>
+    <input type="number" [(ngModel)]="vestimenta" name="vestimenta" min="0" step="0.01" />
+  </div>
+
+  <div>
+    <label>Salud:</label>
+    <input type="number" [(ngModel)]="salud" name="salud" min="0" step="0.01" />
+  </div>
+
+  <br />
+
+  <button type="submit">Calcular</button>
+  <button type="button" (click)="limpiar()">Limpiar</button>
+</form>
+
+<hr />
+
+<h3>Resultados</h3>
+<p><b>Gastos permitidos:</b> ${{ gastosPermitidos }}</p>
+<p><b>Base imponible:</b> ${{ baseImponible }}</p>
+<p><b>Excedente:</b> ${{ excedente }}</p>
+<p><b>Porcentaje excedente:</b> {{ (porcentajeExcedente * 100) }}%</p>
+<p><b>Impuesto fracción básica:</b> ${{ impuestoFraccionBasica }}</p>
+<p><b>Impuesto a la renta:</b> <b>${{ impuestoRenta }}</b></p>
+
+<h3>JSON generado</h3>
+<textarea rows="18" style="width: 100%;" [value]="jsonSalida" readonly></textarea>
