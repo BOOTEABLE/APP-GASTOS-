@@ -24,6 +24,9 @@
     </div>
 
     <!-- BOTÓN -->
+     <div *ngIf="mostrarMensaje" class="alert alert-success mt-3" role="alert">
+        ¡Factura guardada correctamente!
+      </div>
     <button type="button" class="btn btn-primary mt-3" (click)="guardar()">
       Agregar
     </button>

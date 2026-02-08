@@ -1,25 +1,19 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { Gasto } from '../models/gasto';
+import { Observable, of } from 'rxjs';
+import { Gasto } from '../models/gasto'; // <--- Usamos esta importación
 
 @Injectable({
   providedIn: 'root'
 })
 export class GastoService {
 
-  private url = 'data/datos.json';
+  private key = 'facturas_gastos';
 
-  constructor(private http: HttpClient) {
-    console.log('GastoService funcionando');
-  }
+  constructor() { }
 
   obtenerDatos(): Observable<Gasto[]> {
-    return this.http.get<Gasto[]>(this.url);
+    const dataString = localStorage.getItem(this.key);
+    const data: Gasto[] = dataString ? JSON.parse(dataString) : [];
+    return of(data);
   }
-
-guardarDatos(gasto: Gasto): Observable<any> {
-  return this.http.post(this.url, gasto);
-}
-
 }

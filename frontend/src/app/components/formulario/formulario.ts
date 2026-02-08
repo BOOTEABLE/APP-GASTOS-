@@ -16,7 +16,7 @@ export class Formulario {
   gasto: string = 'Ninguno';
 
   jsonSalida: string = '';
-
+  mostrarMensaje: boolean = false;
   guardar(): void {
 
     // 1️⃣ Crear el objeto con los datos del formulario
@@ -39,5 +39,19 @@ export class Formulario {
 
     // 5️⃣ Mostrar el JSON en pantalla
     this.jsonSalida = JSON.stringify(lista, null, 2);
+    // --- CÓDIGO NUEVO ---
+    
+    // 2. Mostrar el mensaje
+    this.mostrarMensaje = true;
+
+    // 3. Ocultar el mensaje después de 3 segundos (3000 ms)
+    setTimeout(() => {
+      this.mostrarMensaje = false;
+    }, 3000);
+
+    // 4. (Opcional) Limpiar el formulario para escribir otro nuevo
+    this.valor = 0;
+    this.gasto = 'Ninguno';
+    // --------------------
   }
 }

@@ -1,18 +1,21 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 
+// Componentes NO Standalone (Clásicos)
 import { Informacion } from './components/informacion/informacion';
 import { Menu } from './components/menu/menu';
 import { Galeria } from './components/galeria/galeria';
-import { Formulario } from './components/formulario/formulario';
-import { Reporte } from './components/reporte/reporte';
 import { ContactoDev } from './components/contacto-dev/contacto-dev';
+
+// Componentes Standalone
+import { Formulario } from './components/formulario/formulario';
+import { Reporte } from './components/reporte/reporte'; // <--- Este es el problemático
 import { Usuarios } from './components/usuarios/usuarios';
-import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -21,20 +24,20 @@ import { HttpClientModule } from '@angular/common/http';
     Informacion,
     Menu,
     Galeria,
-    // ❌ Impuesto,  QUITAR
-    // ❌ Formulario, QUITAR si es standalone
-    Reporte,
     ContactoDev,
-   
+    // ❌ BORRA "Reporte" DE AQUÍ.
+    // Los componentes standalone NO van en declarations.
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     HttpClientModule,
-    Formulario, // ✅ si Formulario es standalone
-       // ✅ si Impuesto es standalone
-        Usuarios,
+    
+    // ✅ AQUÍ SÍ van los standalone:
+    Formulario,
+    Usuarios,
+    Reporte  // <--- AGREGALO AQUÍ (junto a Formulario y Usuarios)
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

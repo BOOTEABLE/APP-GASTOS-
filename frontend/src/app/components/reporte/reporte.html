@@ -1,19 +1,80 @@
-<table class="table table-striped" *ngIf="gastos.length > 0">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Tipo</th>
-      <th>RUC</th>
-      <th>Valor</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let gasto of gastos">
-      <td>{{ gasto.id }}</td>
-      <td>{{ gasto.tipo }}</td>
-      <td>{{ gasto.ruc }}</td>
-      <td>{{ gasto.valor }}</td>
-    </tr>
-  </tbody>
-</table>
+<div class="container mt-4">
+  
+  <h2 class="mb-4 text-primary">Panel de Control</h2>
 
+  <div class="btn-group mb-4 shadow-sm" role="group">
+    <button type="button" 
+            class="btn" 
+            [ngClass]="vistaActual === 'gastos' ? 'btn-primary' : 'btn-outline-primary'"
+            (click)="cambiarVista('gastos')">
+      Facturas
+    </button>
+    
+    <button type="button" 
+            class="btn" 
+            [ngClass]="vistaActual === 'usuarios' ? 'btn-primary' : 'btn-outline-primary'"
+            (click)="cambiarVista('usuarios')">
+      Usuarios (API)
+    </button>
+  </div>
+
+  <div *ngIf="vistaActual === 'gastos'">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Historial de Facturas</h4>
+        <button class="btn btn-danger btn-sm" (click)="borrarTodo()" *ngIf="gastos.length > 0">
+            🗑️ Limpiar Historial
+        </button>
+    </div>
+    <table class="table table-striped table-bordered" *ngIf="gastos.length > 0">
+      <thead class="table-dark">
+        <tr>
+          <th>Fecha</th>
+          <th>Gasto</th>
+          <th>RUC</th>
+          <th>Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of gastos">
+          <td>{{ item.fecha | date:'shortDate' }}</td>
+          <td>{{ item.gasto }}</td>
+          <td>{{ item.ruc }}</td>
+          <td>{{ item.valor | currency }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <div *ngIf="gastos.length === 0" class="alert alert-warning">
+      No hay facturas registradas.
+    </div>
+  </div>
+
+  <div *ngIf="vistaActual === 'usuarios'">
+    
+    <h4 class="text-secondary">Usuarios del Sistema (JSONPlaceholder)</h4>
+    
+    <div *ngIf="users.length === 0" class="alert alert-info mt-3">
+      Cargando usuarios desde la API...
+    </div>
+
+    <table class="table table-hover mt-3 shadow-sm" *ngIf="users.length > 0">
+      <thead class="table-primary">
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Usuario (Login)</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let u of users">
+          <td>{{ u.id }}</td>
+          <td>{{ u.name }}</td>
+          <td>{{ u.username }}</td>
+          <td>{{ u.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+
+</div>
