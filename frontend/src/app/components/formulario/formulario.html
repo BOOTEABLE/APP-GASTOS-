@@ -1,42 +1,126 @@
-<form>
-  <div class="form-group">
-    <h1 class="text-center text-primary">Facturas Gastos</h1>
-
-    <div class="input-group">
-      <label for="ruc" class="form-label">Ruc</label>
-      <input type="text" class="form-control" id="ruc" name="ruc" [(ngModel)]="ruc">
+<div class="container mt-4 animate__animated animate__fadeIn">
+    
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">
+            <i class="material-icons align-middle fs-1">receipt</i> 
+            Registro de Facturas
+        </h2>
+        <p class="text-muted">Ingresa los datos de tus comprobantes electrónicos o físicos</p>
     </div>
 
-    <div class="input-group">
-      <label for="valor" class="form-label">Valor de factura</label>
-      <input type="number" class="form-control" id="valor" name="valor" [(ngModel)]="valor">
+    <div class="row justify-content-center">
+        
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-lg border-0 rounded-4 mb-4">
+                <div class="card-header bg-primary text-white text-center py-3 rounded-top-4">
+                    <h5 class="mb-0 fw-bold">Nueva Factura</h5>
+                </div>
+
+                <div class="card-body p-4">
+                    <form (ngSubmit)="guardar()">
+                        
+                        <div class="mb-3">
+                            <label for="ruc" class="form-label fw-bold small text-secondary">Número de RUC</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-primary">
+                                    <i class="material-icons fs-6">badge</i>
+                                </span>
+                                <input type="text" class="form-control" id="ruc" name="ruc" 
+                                       [(ngModel)]="ruc" placeholder="Ej: 17900..." required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="valor" class="form-label fw-bold small text-secondary">Valor Total</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-success text-white fw-bold">$</span>
+                                <input type="number" class="form-control" id="valor" name="valor" 
+                                       [(ngModel)]="valor" placeholder="0.00" min="0" step="0.01" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="gasto" class="form-label fw-bold small text-secondary">Categoría de Gasto</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light text-primary">
+                                    <i class="material-icons fs-6">category</i>
+                                </span>
+                                <select class="form-select" id="gasto" name="gasto" [(ngModel)]="gasto">
+                                    <option value="" disabled selected>Seleccione una categoría</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Vivienda">Vivienda</option>
+                                    <option value="Educacion">Educación</option>
+                                    <option value="Vestimenta">Vestimenta</option>
+                                    <option value="Alimentacion">Alimentación</option>
+                                    <option value="Ninguno">Ninguno</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div *ngIf="mostrarMensaje" class="alert alert-success d-flex align-items-center shadow-sm" role="alert">
+                            <i class="material-icons me-2">check_circle</i>
+                            <div>
+                                ¡Factura guardada correctamente!
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm rounded-pill">
+                                <i class="material-icons align-middle me-1">save</i> 
+                                Agregar Factura
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card border-0 bg-transparent">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase small fw-bold mb-3 text-center">Vista Previa</h6>
+                    
+                    <div class="ticket-preview p-4 shadow-sm rounded-3 bg-white border border-light position-relative">
+                        <div class="ticket-hole-top"></div>
+
+                        <div class="text-center mb-3 border-bottom pb-2">
+                            <i class="material-icons text-muted fs-1">storefront</i>
+                            <h6 class="fw-bold mt-2 mb-0">Comprobante</h6>
+                            <small class="text-muted">Detalle de registro</small>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted small fw-bold">RUC:</div>
+                            <div class="col-8 text-end font-monospace">{{ ruc || '---' }}</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-4 text-muted small fw-bold">Categoría:</div>
+                            <div class="col-8 text-end">
+                                <span class="badge" 
+                                      [ngClass]="{
+                                        'bg-success': gasto == 'Salud',
+                                        'bg-info': gasto == 'Educacion',
+                                        'bg-warning text-dark': gasto == 'Alimentacion',
+                                        'bg-secondary': !gasto || gasto == 'Ninguno'
+                                      }">
+                                    {{ gasto || 'Pendiente' }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4 pt-2 border-top border-2 border-dashed">
+                            <div class="col-6 fw-bold fs-5">TOTAL</div>
+                            <div class="col-6 text-end fw-bold fs-4 text-success">
+                                ${{ (valor || 0) | number:'1.2-2' }}
+                            </div>
+                        </div>
+                        
+                        <div class="ticket-hole-bottom"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-
-    <div class="input-group">
-      <label for="gasto" class="form-label">Gasto</label>
-      <select class="form-select" id="gasto" name="gasto" [(ngModel)]="gasto">
-        <option value="" disabled>Escoja el tipo de gasto</option>
-        <option value="Salud">Salud</option>
-        <option value="Vivienda">Vivienda</option>
-        <option value="Educacion">Educación</option>
-        <option value="Ninguno">Ninguno</option>
-      </select>
-    </div>
-
-    <!-- BOTÓN -->
-     <div *ngIf="mostrarMensaje" class="alert alert-success mt-3" role="alert">
-        ¡Factura guardada correctamente!
-      </div>
-    <button type="button" class="btn btn-primary mt-3" (click)="guardar()">
-      Agregar
-    </button>
-  </div>
-</form>
-
-<hr>
-
-<div class="mt-3">
-  <p>RUC: {{ ruc }}</p>
-  <p>VALOR: {{ valor }}</p>
-  <p>TIPO GASTO: {{ gasto }}</p>
 </div>

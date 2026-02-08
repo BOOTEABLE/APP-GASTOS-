@@ -1,80 +1,160 @@
-<div class="container mt-4">
-  
-  <h2 class="mb-4 text-primary">Panel de Control</h2>
-
-  <div class="btn-group mb-4 shadow-sm" role="group">
-    <button type="button" 
-            class="btn" 
-            [ngClass]="vistaActual === 'gastos' ? 'btn-primary' : 'btn-outline-primary'"
-            (click)="cambiarVista('gastos')">
-      Facturas
-    </button>
+<div class="container mt-4 animate__animated animate__fadeIn">
     
-    <button type="button" 
-            class="btn" 
-            [ngClass]="vistaActual === 'usuarios' ? 'btn-primary' : 'btn-outline-primary'"
-            (click)="cambiarVista('usuarios')">
-      Usuarios (API)
-    </button>
-  </div>
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold text-dark mb-0">
+                <i class="material-icons align-middle text-primary fs-1 me-2">analytics</i>
+                Panel de Control
+            </h2>
+            <p class="text-muted small mb-0 ms-1">Resumen de movimientos y usuarios</p>
+        </div>
 
-  <div *ngIf="vistaActual === 'gastos'">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h4>Historial de Facturas</h4>
-        <button class="btn btn-danger btn-sm" (click)="borrarTodo()" *ngIf="gastos.length > 0">
-            🗑️ Limpiar Historial
-        </button>
-    </div>
-    <table class="table table-striped table-bordered" *ngIf="gastos.length > 0">
-      <thead class="table-dark">
-        <tr>
-          <th>Fecha</th>
-          <th>Gasto</th>
-          <th>RUC</th>
-          <th>Valor</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of gastos">
-          <td>{{ item.fecha | date:'shortDate' }}</td>
-          <td>{{ item.gasto }}</td>
-          <td>{{ item.ruc }}</td>
-          <td>{{ item.valor | currency }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <div *ngIf="gastos.length === 0" class="alert alert-warning">
-      No hay facturas registradas.
-    </div>
-  </div>
-
-  <div *ngIf="vistaActual === 'usuarios'">
-    
-    <h4 class="text-secondary">Usuarios del Sistema</h4>
-    
-    <div *ngIf="users.length === 0" class="alert alert-info mt-3">
-      Cargando usuarios desde la API...
+        <div class="bg-white p-1 rounded-pill shadow-sm border mt-3 mt-md-0">
+            <button type="button" 
+                    class="btn rounded-pill px-4 fw-bold transition-all" 
+                    [ngClass]="vistaActual === 'gastos' ? 'btn-primary shadow-sm' : 'btn-light text-muted bg-transparent'"
+                    (click)="cambiarVista('gastos')">
+                <i class="material-icons align-middle fs-6 me-1">receipt_long</i> Facturas
+            </button>
+            
+            <button type="button" 
+                    class="btn rounded-pill px-4 fw-bold transition-all ms-1" 
+                    [ngClass]="vistaActual === 'usuarios' ? 'btn-primary shadow-sm' : 'btn-light text-muted bg-transparent'"
+                    (click)="cambiarVista('usuarios')">
+                <i class="material-icons align-middle fs-6 me-1">group</i> Usuarios API
+            </button>
+        </div>
     </div>
 
-    <table class="table table-hover mt-3 shadow-sm" *ngIf="users.length > 0">
-      <thead class="table-primary">
-        <tr>
-          <th>ID</th>
-          <th>Nombre</th>
-          <th>Usuario (Login)</th>
-          <th>Email</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let u of users">
-          <td>{{ u.id }}</td>
-          <td>{{ u.name }}</td>
-          <td>{{ u.username }}</td>
-          <td>{{ u.email }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div *ngIf="vistaActual === 'gastos'" class="animate__animated animate__fadeIn">
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-header bg-white border-0 py-3 px-4 d-flex justify-content-between align-items-center">
+                <h5 class="fw-bold text-dark mb-0">Historial de Transacciones</h5>
+                
+                <button class="btn btn-outline-danger btn-sm rounded-pill px-3" 
+                        (click)="borrarTodo()" 
+                        *ngIf="gastos.length > 0">
+                    <i class="material-icons align-middle fs-6 me-1">delete_sweep</i> 
+                    Limpiar Historial
+                </button>
+            </div>
 
-  </div>
+            <div class="card-body p-0">
+                <div class="table-responsive" *ngIf="gastos.length > 0">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-light text-uppercase small text-muted">
+                            <tr>
+                                <th class="ps-4 py-3">Fecha</th>
+                                <th class="py-3">Categoría</th>
+                                <th class="py-3">RUC / Identificación</th>
+                                <th class="py-3 text-end pe-4">Valor</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of gastos">
+                                <td class="ps-4">
+                                    <div class="d-flex align-items-center">
+                                        <div class="bg-light rounded-circle p-2 me-3 text-secondary">
+                                            <i class="material-icons fs-5">calendar_today</i>
+                                        </div>
+                                        <span class="fw-bold text-dark">{{ item.fecha | date:'mediumDate' }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge rounded-pill px-3 py-2"
+                                          [ngClass]="{
+                                            'bg-success-subtle text-success': item.gasto === 'Salud',
+                                            'bg-warning-subtle text-warning-emphasis': item.gasto === 'Alimentacion',
+                                            'bg-info-subtle text-info': item.gasto === 'Educacion',
+                                            'bg-secondary-subtle text-secondary': item.gasto === 'Ninguno' || !item.gasto
+                                          }">
+                                        {{ item.gasto || 'General' }}
+                                    </span>
+                                </td>
+                                <td class="font-monospace text-muted">{{ item.ruc }}</td>
+                                <td class="text-end pe-4">
+                                    <span class="fw-bold text-dark fs-5">{{ item.valor | currency }}</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot class="bg-light border-top">
+                            <tr>
+                                <td colspan="3" class="text-end fw-bold text-muted py-3">TOTAL REGISTRADO:</td>
+                                <td class="text-end pe-4 fw-bold text-primary py-3">
+                                    {{ calcularTotal() | currency }}
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div *ngIf="gastos.length === 0" class="text-center py-5">
+                    <div class="mb-3 text-muted opacity-25">
+                        <i class="material-icons" style="font-size: 4rem;">receipt</i>
+                    </div>
+                    <h5 class="text-muted fw-bold">No hay facturas registradas</h5>
+                    <p class="text-muted small">Ve a la pestaña de registro para agregar una nueva.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="vistaActual === 'usuarios'" class="animate__animated animate__fadeIn">
+        <div class="card shadow border-0 rounded-4">
+            <div class="card-header bg-white border-0 py-3 px-4">
+                <h5 class="fw-bold text-dark mb-0">Directorio de Usuarios (JSONPlaceholder)</h5>
+            </div>
+
+            <div class="card-body p-0">
+                
+                <div *ngIf="users.length === 0" class="text-center py-5">
+                    <div class="spinner-border text-primary mb-3" role="status"></div>
+                    <p class="text-muted">Conectando con la API...</p>
+                </div>
+
+                <div class="table-responsive" *ngIf="users.length > 0">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead class="bg-primary text-white">
+                            <tr>
+                                <th class="ps-4 py-3" style="width: 50px;">ID</th>
+                                <th class="py-3">Usuario</th>
+                                <th class="py-3">Credenciales</th>
+                                <th class="py-3">Contacto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let u of users">
+                                <td class="ps-4 fw-bold text-muted">#{{ u.id }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center me-3 fw-bold shadow-sm" 
+                                             style="width: 40px; height: 40px; font-size: 0.9rem;">
+                                            {{ u.name.charAt(0) }}
+                                        </div>
+                                        <div>
+                                            <div class="fw-bold text-dark">{{ u.name }}</div>
+                                            <small class="text-muted">Empresa: {{ u.company?.name || 'Freelance' }}</small>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="badge bg-light text-dark border">
+                                        <i class="material-icons align-middle fs-6 me-1 text-muted">person</i>
+                                        {{ u.username }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="mailto:{{ u.email }}" class="text-decoration-none text-secondary">
+                                        <i class="material-icons align-middle fs-6 me-1">email</i>
+                                        {{ u.email }}
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

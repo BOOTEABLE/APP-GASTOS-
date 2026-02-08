@@ -1,0 +1,40 @@
+/* ... Tus estilos anteriores de gallery-card ... */
+
+/* Estilos del MODAL */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo negro semi-transparente */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; /* Para que quede encima de todo */
+    backdrop-filter: blur(5px); /* Efecto borroso de fondo */
+}
+
+.modal-content-custom {
+    background: white;
+    width: 90%;
+    max-width: 500px; /* Tamaño máximo de la ventana */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animación de entrada del modal (Zoom In) */
+.animate__zoomIn {
+    animation: zoomIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes zoomIn {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

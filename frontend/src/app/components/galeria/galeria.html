@@ -1,1 +1,69 @@
-<p>galeria works!</p>
+<div class="container mt-4 animate__animated animate__fadeIn">
+    
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">
+            <i class="material-icons align-middle fs-1">photo_library</i> 
+            Galería de Categorías
+        </h2>
+        <p class="text-muted">Visualización de tipos de gastos registrados en el sistema</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-6 col-lg-3" *ngFor="let img of imagenes">
+            <div class="card h-100 shadow border-0 rounded-4 overflow-hidden gallery-card">
+                
+                <div class="img-wrapper">
+                    <img [src]="img.url" class="card-img-top" [alt]="img.titulo">
+                    <div class="overlay" (click)="abrirDetalle(img)">
+                        <i class="material-icons text-white fs-1">visibility</i>
+                    </div>
+                </div>
+
+                <div class="card-body text-center">
+                    <h5 class="card-title fw-bold text-dark mb-1">{{ img.titulo }}</h5>
+                    <p class="card-text text-muted small">{{ img.desc }}</p>
+                </div>
+                
+                <div class="card-footer bg-white border-0 pb-3">
+                    <button class="btn btn-outline-primary btn-sm rounded-pill w-100" 
+                            (click)="abrirDetalle(img)">
+                        Ver Detalles
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" *ngIf="imagenSeleccionada">
+        <div class="modal-content-custom shadow-lg rounded-4 animate__animated animate__zoomIn">
+            
+            <div class="position-relative">
+                <img [src]="imagenSeleccionada.url" class="img-fluid rounded-top-4 w-100" style="height: 250px; object-fit: cover;">
+                <button class="btn btn-light rounded-circle position-absolute top-0 end-0 m-3 shadow-sm" 
+                        (click)="cerrarDetalle()">
+                    <i class="material-icons align-middle">close</i>
+                </button>
+            </div>
+
+            <div class="p-4 text-center">
+                <h3 class="fw-bold text-primary mb-2">{{ imagenSeleccionada.titulo }}</h3>
+                <span class="badge bg-info text-dark mb-3">Categoría Activa</span>
+                <p class="text-muted fs-5">{{ imagenSeleccionada.desc }}</p>
+                
+                <hr class="my-4">
+                
+                <p class="small text-secondary">
+                    Este tipo de gasto es deducible de impuestos según la normativa vigente.
+                    Asegúrese de guardar todos los comprobantes físicos o electrónicos.
+                </p>
+
+                <button class="btn btn-primary px-5 rounded-pill mt-2" (click)="cerrarDetalle()">
+                    Entendido
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+</div>

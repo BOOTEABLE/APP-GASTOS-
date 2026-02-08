@@ -21,9 +21,8 @@ import { Usuarios } from './components/usuarios/usuarios';
   declarations: [
     App,
     Informacion,
-    Menu,
-    Galeria,
-    ContactoDev,
+    Menu,    
+    
     
   ],
   imports: [
@@ -36,7 +35,9 @@ import { Usuarios } from './components/usuarios/usuarios';
     Impuesto,
     Formulario,
     Usuarios,
-    Reporte
+    Reporte,
+    Galeria,
+    ContactoDev
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

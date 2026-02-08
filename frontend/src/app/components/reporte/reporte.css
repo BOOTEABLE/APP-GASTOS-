@@ -1,0 +1,20 @@
+/* Transiciones suaves para los botones de pestañas */
+.transition-all {
+    transition: all 0.3s ease;
+}
+
+/* Colores de fondo suaves para los badges (pill) */
+.bg-success-subtle { background-color: #d1e7dd; }
+.bg-warning-subtle { background-color: #fff3cd; }
+.bg-info-subtle { background-color: #cff4fc; }
+.bg-secondary-subtle { background-color: #e2e3e5; }
+
+/* Efecto hover en las filas */
+.table-hover tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.002); /* Efecto sutil de zoom */
+    transition: transform 0.2s;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    z-index: 1;
+    position: relative;
+}

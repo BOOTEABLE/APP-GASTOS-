@@ -51,8 +51,10 @@ export class Reporte implements OnInit {
       this.gastos = [];
     }
   }
-
   cambiarVista(vista: string) {
     this.vistaActual = vista;
+  }
+  calcularTotal(): number {
+    return this.gastos.reduce((acc, item) => acc + (Number(item.valor) || 0), 0);
   }
 }

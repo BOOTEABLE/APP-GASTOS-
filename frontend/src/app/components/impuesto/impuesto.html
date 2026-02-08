@@ -1,62 +1,163 @@
-<h2>Impuesto a la Renta (2023)</h2>
+<div class="container mt-4 animate__animated animate__fadeIn">
+    
+    <div class="text-center mb-4">
+        <h2 class="fw-bold text-primary">
+            <i class="material-icons align-middle fs-2">account_balance_wallet</i> 
+            Declaración Impuesto a la Renta
+        </h2>
+        <p class="text-muted">Proyección fiscal año 2023</p>
+    </div>
 
-<form (ngSubmit)="calcularImpuestoRenta()">
+    <div class="row g-4">
+        
+        <div class="col-lg-7">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-header bg-white border-0 pt-4 px-4">
+                    <h5 class="fw-bold text-dark">
+                        <i class="material-icons align-middle text-primary me-2">person</i>
+                        Información del Contribuyente
+                    </h5>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form (ngSubmit)="calcularImpuestoRenta()">
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="form-label fw-bold small text-secondary">Cédula</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="material-icons fs-6">badge</i></span>
+                                    <input type="text" class="form-control" [(ngModel)]="cedula" name="cedula" placeholder="Ej: 17..." required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-secondary">Sueldo Anual</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-success text-white fw-bold">$</span>
+                                    <input type="number" class="form-control" [(ngModel)]="sueldoAnual" name="sueldoAnual" min="0" step="0.01" placeholder="0.00" required />
+                                </div>
+                            </div>
+                        </div>
 
-  <div>
-    <label>Cédula:</label>
-    <input type="text" [(ngModel)]="cedula" name="cedula" required />
-  </div>
+                        <hr class="text-muted opacity-25">
 
-  <div>
-    <label>Sueldo anual (Ingresos):</label>
-    <input type="number" [(ngModel)]="sueldoAnual" name="sueldoAnual" min="0" step="0.01" required />
-  </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="fw-bold text-dark mb-0">
+                                <i class="material-icons align-middle text-warning me-1">shopping_cart</i>
+                                Gastos Personales
+                            </h6>
+                            <span class="badge bg-info text-dark">Límite Cat: ${{ LIMITE_CATEGORIA }}</span>
+                        </div>
 
-  <h3>Deducciones por Gastos Personales</h3>
-  <small>
-    Límite por categoría: ${{ LIMITE_CATEGORIA }} | Límite total: ${{ LIMITE_TOTAL }}
-  </small>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="form-label small">Vivienda</label>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text"><i class="material-icons fs-6">home</i></span>
+                                    <input type="number" class="form-control" [(ngModel)]="vivienda" name="vivienda" min="0" step="0.01" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Alimentación</label>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text"><i class="material-icons fs-6">restaurant</i></span>
+                                    <input type="number" class="form-control" [(ngModel)]="alimentacion" name="alimentacion" min="0" step="0.01" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Salud</label>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text"><i class="material-icons fs-6">medical_services</i></span>
+                                    <input type="number" class="form-control" [(ngModel)]="salud" name="salud" min="0" step="0.01" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small">Educación / Arte</label>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text"><i class="material-icons fs-6">school</i></span>
+                                    <input type="number" class="form-control" [(ngModel)]="educacion" name="educacion" min="0" step="0.01" />
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small">Vestimenta</label>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text"><i class="material-icons fs-6">checkroom</i></span>
+                                    <input type="number" class="form-control" [(ngModel)]="vestimenta" name="vestimenta" min="0" step="0.01" />
+                                </div>
+                            </div>
+                        </div>
 
-  <div>
-    <label>Alimentación:</label>
-    <input type="number" [(ngModel)]="alimentacion" name="alimentacion" min="0" step="0.01" />
-  </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <button type="button" class="btn btn-outline-secondary" (click)="limpiar()">
+                                <i class="material-icons align-middle fs-6">cleaning_services</i> Limpiar
+                            </button>
+                            <button type="submit" class="btn btn-primary px-5 shadow">
+                                <i class="material-icons align-middle fs-6">calculate</i> Calcular
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-  <div>
-    <label>Vivienda:</label>
-    <input type="number" [(ngModel)]="vivienda" name="vivienda" min="0" step="0.01" />
-  </div>
+        <div class="col-lg-5">
+            <div class="card bg-dark text-white shadow-lg border-0 rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h5 class="card-title fw-bold text-info mb-4 text-center">
+                        <i class="material-icons align-middle">receipt_long</i> Resumen Fiscal
+                    </h5>
 
-  <div>
-    <label>Educación, arte y cultura:</label>
-    <input type="number" [(ngModel)]="educacion" name="educacion" min="0" step="0.01" />
-  </div>
+                    <div class="vstack gap-3 font-monospace">
+                        <div class="d-flex justify-content-between">
+                            <span class="text-white-50">Ingresos:</span>
+                            <span>${{ sueldoAnual || 0 | number:'1.2-2' }}</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-white-50">Gastos Deducibles:</span>
+                            <span class="text-success">-${{ gastosPermitidos | number:'1.2-2' }}</span>
+                        </div>
+                        <hr class="border-secondary">
+                        <div class="d-flex justify-content-between">
+                            <span class="text-white-50">Base Imponible:</span>
+                            <span class="fw-bold">${{ baseImponible | number:'1.2-2' }}</span>
+                        </div>
+                        
+                        <div class="bg-secondary bg-opacity-25 p-3 rounded-3 mt-2 small">
+                            <div class="d-flex justify-content-between">
+                                <span>Fracción Básica:</span>
+                                <span>${{ impuestoFraccionBasica | number:'1.2-2' }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Excedente:</span>
+                                <span>${{ excedente | number:'1.2-2' }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>% Excedente:</span>
+                                <span>{{ (porcentajeExcedente * 100) | number:'1.0-0' }}%</span>
+                            </div>
+                        </div>
 
-  <div>
-    <label>Vestimenta:</label>
-    <input type="number" [(ngModel)]="vestimenta" name="vestimenta" min="0" step="0.01" />
-  </div>
+                        <div class="bg-white text-dark p-3 rounded-3 mt-2 text-center shadow">
+                            <small class="text-uppercase text-muted fw-bold">Impuesto a Pagar</small>
+                            <h2 class="display-6 fw-bold text-primary mb-0">${{ impuestoRenta | number:'1.2-2' }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <div>
-    <label>Salud:</label>
-    <input type="number" [(ngModel)]="salud" name="salud" min="0" step="0.01" />
-  </div>
+            <div class="card shadow-sm border-0 rounded-4">
+                <div class="card-header bg-light fw-bold small text-muted">
+                    <i class="material-icons align-middle fs-6">code</i> JSON Generado
+                </div>
+                <div class="card-body p-0">
+                    <textarea class="form-control border-0 bg-light font-monospace small text-muted" 
+                              rows="10" 
+                              [value]="jsonSalida" 
+                              readonly 
+                              style="resize: none; font-size: 0.8rem;"></textarea>
+                </div>
+            </div>
 
-  <br />
-
-  <button type="submit">Calcular</button>
-  <button type="button" (click)="limpiar()">Limpiar</button>
-</form>
-
-<hr />
-
-<h3>Resultados</h3>
-<p><b>Gastos permitidos:</b> ${{ gastosPermitidos }}</p>
-<p><b>Base imponible:</b> ${{ baseImponible }}</p>
-<p><b>Excedente:</b> ${{ excedente }}</p>
-<p><b>Porcentaje excedente:</b> {{ (porcentajeExcedente * 100) }}%</p>
-<p><b>Impuesto fracción básica:</b> ${{ impuestoFraccionBasica }}</p>
-<p><b>Impuesto a la renta:</b> <b>${{ impuestoRenta }}</b></p>
-
-<h3>JSON generado</h3>
-<textarea rows="18" style="width: 100%;" [value]="jsonSalida" readonly></textarea>
+        </div>
+    </div>
+</div>

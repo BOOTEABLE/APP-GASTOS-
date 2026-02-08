@@ -1,0 +1,14 @@
+/* Hace que los números se vean tipo "ticket" */
+.font-monospace {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Efecto focus en los inputs */
+.form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+    border-color: #0d6efd;
+}
+
+.input-group-text {
+    border-color: #ced4da;
+}

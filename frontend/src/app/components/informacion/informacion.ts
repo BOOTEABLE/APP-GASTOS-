@@ -21,6 +21,21 @@ export class Informacion implements OnInit {
         nombre: "Salud",
         descripcion: "Hospital",
         imagen: "salud.jpg"
+      },
+      {
+        nombre: "Educación",
+        descripcion: "Escuela",
+        imagen: "educacion.jpg"
+      },
+      {
+        nombre: "Vestimenta",
+        descripcion: "Ropá",
+        imagen: "ropa.jpg"
+      },
+      {
+        nombre: "Alimentación",
+        descripcion: "Comida",
+        imagen: "comida.jpg"
       }
     ];
   }

@@ -1,1 +1,92 @@
-<p>contacto-dev works!</p>
+<div class="container mt-4 animate__animated animate__fadeIn">
+    
+    <div class="text-center mb-5">
+        <h2 class="fw-bold text-primary">
+            <i class="material-icons align-middle fs-1">code</i> 
+            Acerca del Desarrollador
+        </h2>
+        <p class="text-muted">Conoce quién está detrás de este proyecto</p>
+    </div>
+
+    <div class="row g-4 justify-content-center">
+        
+        <div class="col-md-5 col-lg-4">
+            <div class="card shadow-lg border-0 rounded-4 text-center p-4 h-100">
+                
+                <div class="avatar-container mx-auto mb-3">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" 
+                         alt="Foto Desarrollador" 
+                         class="img-fluid rounded-circle shadow p-1 bg-white">
+                </div>
+
+                <h4 class="fw-bold text-dark mb-1">{{ developer.nombre }}</h4>
+                <span class="badge bg-primary-subtle text-primary mb-3">{{ developer.rol }}</span>
+                
+                <p class="text-muted small mb-4">
+                    {{ developer.descripcion }}
+                </p>
+
+                <div class="d-flex justify-content-center gap-2 mb-4">
+                    <a [href]="developer.github" target="_blank" class="btn btn-outline-dark btn-sm rounded-circle social-btn">
+                        <i class="material-icons fs-5">code</i>
+                    </a>
+
+                    <a [href]="developer.linkedin" target="_blank" class="btn btn-outline-primary btn-sm rounded-circle social-btn">
+                        <i class="material-icons fs-5">work</i>
+                    </a>
+
+                    <a [href]="'mailto:' + developer.email" class="btn btn-outline-danger btn-sm rounded-circle social-btn">
+                        <i class="material-icons fs-5">email</i>
+                    </a>
+                </div>
+
+                <div class="alert alert-light border small text-muted">
+                    <i class="material-icons align-middle fs-6 me-1">location_on</i>
+                    Quito, Ecuador
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7 col-lg-6">
+            <div class="card shadow border-0 rounded-4 h-100">
+                <div class="card-header bg-white border-0 pt-4 px-4">
+                    <h5 class="fw-bold text-dark mb-0">
+                        <i class="material-icons align-middle text-success me-2">send</i>
+                        Envíame un mensaje
+                    </h5>
+                </div>
+                
+                <div class="card-body p-4">
+                    <form (ngSubmit)="enviarMensaje()">
+                        
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Tu Nombre</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="material-icons fs-6">person</i></span>
+                                <input type="text" class="form-control" placeholder="Ej: Juan Pérez" 
+                                       [(ngModel)]="contacto.nombre" name="nombre" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Mensaje</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="material-icons fs-6">chat</i></span>
+                                <textarea class="form-control" rows="4" placeholder="Escribe tu consulta aquí..." 
+                                          [(ngModel)]="contacto.mensaje" name="mensaje" required></textarea>
+                            </div>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-success shadow-sm">
+                                Enviar Correo
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
