@@ -6,15 +6,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 
-// Componentes NO Standalone (Clásicos)
+// Componentes Clásicos
 import { Informacion } from './components/informacion/informacion';
 import { Menu } from './components/menu/menu';
 import { Galeria } from './components/galeria/galeria';
+import { Impuesto } from './components/impuesto/impuesto';
 import { ContactoDev } from './components/contacto-dev/contacto-dev';
-
-// Componentes Standalone
 import { Formulario } from './components/formulario/formulario';
-import { Reporte } from './components/reporte/reporte'; // <--- Este es el problemático
+import { Reporte } from './components/reporte/reporte'; 
 import { Usuarios } from './components/usuarios/usuarios';
 
 
@@ -25,19 +24,19 @@ import { Usuarios } from './components/usuarios/usuarios';
     Menu,
     Galeria,
     ContactoDev,
-    // ❌ BORRA "Reporte" DE AQUÍ.
-    // Los componentes standalone NO van en declarations.
+    
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
-    HttpClientModule,
+    HttpClientModule, // Necesario para el servicio de empleados
     
-    // ✅ AQUÍ SÍ van los standalone:
+    // Standalone van aquí:
+    Impuesto,
     Formulario,
     Usuarios,
-    Reporte  // <--- AGREGALO AQUÍ (junto a Formulario y Usuarios)
+    Reporte
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

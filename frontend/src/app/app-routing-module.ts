@@ -17,7 +17,7 @@ const routes: Routes = [
   { path: 'informacion', component: Informacion },
   { path: 'galeria', component: Galeria },
   { path: 'registro', component: Formulario },
-  {  path: 'impuesto', component: Impuesto }, // ✅ NUEVO
+  { path: 'impuesto', component: Impuesto }, // ✅ NUEVO
   { path: 'reporte', component: Reporte },
   { path: 'contacto', component: ContactoDev },
   { path: 'users', component: Usuarios },
