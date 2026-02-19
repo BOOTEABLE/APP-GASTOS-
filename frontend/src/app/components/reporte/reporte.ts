@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { GastoService } from '../../service/gasto';
-import { Gasto } from '../../models/gasto';
-import { UserService } from '../../service/user'; // <--- IMPORTANTE
+// 1. Importamos tus servicios (El de Mongo y el de la API de usuarios)
+import { FacturaService } from '../../service/factura'; 
+import { UserService } from '../../service/user';
+// Modelos
 import { User } from '../../models/user';
 
 @Component({
@@ -10,50 +11,61 @@ import { User } from '../../models/user';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './reporte.html',
-  styleUrl: './reporte.css',
+  styleUrls: ['./reporte.css'], // Asegúrate que sea plural si así lo tienes
 })
 export class Reporte implements OnInit {
 
-  gastos: Gasto[] = [];
-  users: User[] = [];
-  vistaActual: string = 'gastos';
-  constructor(
-    private gastoService: GastoService,
-    private userService: UserService  // <--- Inyección del servicio de usuarios
-  ) {}
+  // Variables para datos
+  gastos: any[] = []; // Aquí guardaremos lo de MongoDB
+  users: User[] = []; // Aquí lo de la API externa
   
+  // Control de interfaz
+  vistaActual: string = 'gastos';
+
+  constructor(
+    private facturaService: FacturaService, // Servicio de tu Backend/Mongo
+    private userService: UserService         // Servicio de Usuarios API
+  ) {}
 
   ngOnInit(): void {
-    this.cargarGastos();
-    this.cargarUsuarios(); // <--- Llamamos a la función al iniciar
+    this.cargarGastos();   // Trae facturas de MongoDB
+    this.cargarUsuarios(); // Trae usuarios de la API
   }
 
+  // REEMPLAZADO: Ahora trae datos de MongoDB
   cargarGastos() {
-    this.gastoService.obtenerDatos().subscribe(data => {
-      this.gastos = data;
+    this.facturaService.getFacturas().subscribe({
+      next: (data: any) => { // Agregamos :any
+        this.gastos = data;
+      },
+      error: (e: any) => { // Agregamos :any
+        console.error('Error cargando facturas de Mongo:', e);
+      }
     });
   }
 
-  // Nueva función para consumir tu servicio real
   cargarUsuarios() {
     this.userService.obtenerDatos().subscribe({
       next: (data) => {
-        this.users = data; // Guardamos los datos de la API
+        this.users = data;
         console.log('Usuarios cargados:', data);
       },
       error: (e) => console.error('Error cargando usuarios:', e)
     });
   }
 
+  // REEMPLAZADO: El borrado ahora debería ser una petición DELETE al backend si quisieras,
+  // por ahora lo dejamos para limpiar la vista local o puedes quitarlo.
   borrarTodo() {
-    if (confirm('¿Seguro que quieres borrar todo el historial de facturas?')) {
-      localStorage.removeItem('facturas_gastos');
+    if (confirm('¿Seguro que quieres borrar el historial visual? (No borrará la base de datos)')) {
       this.gastos = [];
     }
   }
+
   cambiarVista(vista: string) {
     this.vistaActual = vista;
   }
+
   calcularTotal(): number {
     return this.gastos.reduce((acc, item) => acc + (Number(item.valor) || 0), 0);
   }
